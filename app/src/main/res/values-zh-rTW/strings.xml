@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">實習簽到</string>
+    <string name="mobile">手機號</string>
+    <string name="login">登入</string>
+    <string name="logout">登出</string>
+    <string name="login_idle">未找到你的資訊，請聯系管理員或老師。 </string>
+    <string name="login_admin">你好，管理員。</string>
+    <string name="login_teacher">你好，%s老師。</string>
+    <string name="login_student">你好，%s同學。</string>
+    <string name="modify_call">修改、打電話？</string>
+    <string name="navigate">導航</string>
+    <string name="modify">修改</string>
+    <string name="call">打電話</string>
+</resources>
