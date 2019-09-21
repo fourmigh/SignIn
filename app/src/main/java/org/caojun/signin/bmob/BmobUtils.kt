@@ -8,12 +8,17 @@ import com.socks.library.KLog
 import org.caojun.signin.MainApplication
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.doAsyncResult
+import org.jetbrains.anko.uiThread
 
 object BmobUtils {
 
     private val admins = ArrayList<Admin>()
     val teachers = ArrayList<Teacher>()
     val students = ArrayList<Student>()
+
+    interface Listener {
+        fun done()
+    }
 
     fun initialize() {
         doAsync {
@@ -23,145 +28,128 @@ object BmobUtils {
         }
     }
 
-    private fun queryAdmins(roles: ArrayList<Admin>) {
+    private fun reQueryAdmins(listener: Listener) {
         val query = BmobQuery<Admin>()
         query.findObjects(object : FindListener<Admin>() {
-            override fun done(list: MutableList<Admin>?, p1: BmobException?) {
+            override fun done(list: MutableList<Admin>?, e: BmobException?) {
 
-                if (list?.isNotEmpty() == true) {
-                    roles.clear()
-                    roles.addAll(list)
-                }
-            }
-        })
-    }
-
-    private fun queryTeachers(roles: ArrayList<Teacher>) {
-        val query = BmobQuery<Teacher>()
-        query.findObjects(object : FindListener<Teacher>() {
-            override fun done(list: MutableList<Teacher>?, p1: BmobException?) {
-
-                if (list?.isNotEmpty() == true) {
-                    roles.clear()
-                    roles.addAll(list)
-                }
-            }
-        })
-    }
-
-    private fun queryStudents(roles: ArrayList<Student>) {
-        val query = BmobQuery<Student>()
-        query.findObjects(object : FindListener<Student>() {
-            override fun done(list: MutableList<Student>?, p1: BmobException?) {
-
-                if (list?.isNotEmpty() == true) {
-                    roles.clear()
-                    roles.addAll(list)
+                doAsync {
+                    if (list?.isNotEmpty() == true) {
+                        admins.clear()
+                        admins.addAll(list)
+                    }
+                    uiThread {
+                        listener.done()
+                    }
                 }
             }
         })
     }
 
     fun isAdmin(mobile: String): Admin? {
-        val result = doAsyncResult {
-            val admins = queryAdmins()
-            if (admins.isEmpty()) {
-                return@doAsyncResult null
-            }
-            for (i in admins.indices) {
-                if (admins[i].mobile == mobile) {
-                    return@doAsyncResult admins[i]
-                }
-            }
-            null
+        if (admins.isEmpty()) {
+            return null
         }
-        return result.get()
+        for (i in admins.indices) {
+            if (admins[i].mobile == mobile) {
+                return admins[i]
+            }
+        }
+        return null
     }
 
-    private fun queryAdmins(): List<Admin> {
-        val result = doAsyncResult {
-
-            if (admins.isNotEmpty()) {
-                return@doAsyncResult admins
-            }
-            queryAdmins(admins)
-            admins
+    private fun queryAdmins() {
+        if (admins.isNotEmpty()) {
+            return
         }
-        return result.get()
+        reQueryAdmins(object : Listener {
+            override fun done() {
+                return
+            }
+        })
+    }
+
+    fun reQueryTeachers(listener: Listener) {
+        val query = BmobQuery<Teacher>()
+        query.addWhereEqualTo("isDeleted", false)
+        query.findObjects(object : FindListener<Teacher>() {
+            override fun done(list: MutableList<Teacher>?, e: BmobException?) {
+
+                doAsync {
+                    teachers.clear()
+                    if (list?.isNotEmpty() == true) {
+                        teachers.addAll(list)
+                    }
+                    uiThread {
+                        listener.done()
+                    }
+                }
+            }
+        })
     }
 
     fun isTeacher(mobile: String): Teacher? {
-        val result = doAsyncResult {
-            val teachers = queryTeachers()
-            if (teachers.isEmpty()) {
-                return@doAsyncResult null
+        if (teachers.isEmpty()) {
+            return null
+        }
+        for (i in teachers.indices) {
+            if (teachers[i].mobile == mobile) {
+                return teachers[i]
             }
-            for (i in teachers.indices) {
-                if (teachers[i].mobile == mobile) {
-                    return@doAsyncResult teachers[i]
+        }
+        return null
+    }
+
+    private fun queryTeachers() {
+        if (teachers.isNotEmpty()) {
+            return
+        }
+        reQueryTeachers(object : Listener {
+            override fun done() {
+                return
+            }
+        })
+    }
+
+    fun reQueryStudents(listener: Listener) {
+        val query = BmobQuery<Student>()
+        query.addWhereEqualTo("isDeleted", false)
+        query.findObjects(object : FindListener<Student>() {
+            override fun done(list: MutableList<Student>?, e: BmobException?) {
+
+                doAsync {
+                    students.clear()
+                    if (list?.isNotEmpty() == true) {
+                        students.addAll(list)
+                    }
+                    uiThread {
+                        listener.done()
+                    }
                 }
             }
-            null
-        }
-        return result.get()
-    }
-
-    fun reQueryTeachers(): Boolean {
-        val result = doAsyncResult {
-            teachers.clear()
-            queryTeachers()
-            true
-        }
-        return result.get()
-    }
-
-    private fun queryTeachers(): List<Teacher> {
-        val result = doAsyncResult {
-
-            if (teachers.isNotEmpty()) {
-                return@doAsyncResult teachers
-            }
-            queryTeachers(teachers)
-            teachers
-        }
-        return result.get()
+        })
     }
 
     fun isStudent(mobile: String): Student? {
-        val result = doAsyncResult {
-            val students = queryStudents()
-            if (students.isEmpty()) {
-                return@doAsyncResult null
-            }
-            for (i in students.indices) {
-                if (students[i].mobile == mobile) {
-                    return@doAsyncResult students[i]
-                }
-            }
-            null
+        if (students.isEmpty()) {
+            return null
         }
-        return result.get()
+        for (i in students.indices) {
+            if (students[i].mobile == mobile) {
+                return students[i]
+            }
+        }
+        return null
     }
 
-    fun reQueryStudents(): Boolean {
-        val result = doAsyncResult {
-            students.clear()
-            queryStudents()
-            true
-
+    private fun queryStudents() {
+        if (students.isNotEmpty()) {
+            return
         }
-        return result.get()
-    }
-
-    private fun queryStudents(): List<Student> {
-        val result = doAsyncResult {
-
-            if (students.isNotEmpty()) {
-                return@doAsyncResult students
+        reQueryStudents(object : Listener {
+            override fun done() {
+                return
             }
-            queryStudents(students)
-            students
-        }
-        return result.get()
+        })
     }
 }

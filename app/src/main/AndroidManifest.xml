@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.caojun.signin">
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <!-- 设置key -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="c510211098ce3c79f38b482c62179497"/>
+
+        <!-- 定位需要的服务 适配Android Q需要加上android:foregroundServiceType="location"-->
+        <service
+            android:name="com.amap.api.location.APSService"/>
+
+        <!-- BMOB -->
+<!--        <meta-data-->
+<!--            android:name="cn.bmob.v3.appid"-->
+<!--            android:value="45fc728b13ed99b3a608299ffc8cc233" />-->
+        <meta-data
+            android:name="cn.bmob.v3.appid"
+            android:value="d05646b9b25a9fcb63d65797c2b5e098" />
+
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MapActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,6 +40,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.StudentActivity"
+            android:label="@string/student"/>
+        <activity android:name=".activity.StudentSignActivity"/>
+        <activity android:name=".activity.StudentSignListActivity"/>
+        <activity android:name=".activity.TeacherActivity"
+            android:label="@string/teacher"/>
+        <activity android:name=".activity.TeacherSignActivity"/>
+        <activity android:name=".activity.TeacherSignListActivity"/>
+        <activity android:name=".activity.TeacherStudentListActivity"
+            android:label="@string/teacher_student"/>
+        <activity android:name=".activity.TeacherListActivity"/>
+        <activity android:name=".activity.StudentListActivity"/>
     </application>
 
 </manifest>

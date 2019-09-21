@@ -1,3 +1,8 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="listview_margin">64dp</dimen>
+    <dimen name="ll_margin">47dp</dimen>
+    <dimen name="name_size">24sp</dimen>
+    <dimen name="name_padding">4dp</dimen>
 </resources>

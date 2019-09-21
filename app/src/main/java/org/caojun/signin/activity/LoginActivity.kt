@@ -16,7 +16,6 @@ import org.jetbrains.anko.uiThread
 import android.text.Editable
 import android.text.TextWatcher
 
-
 /**
  * 登录，验证手机号，判断角色
  */
@@ -50,20 +49,22 @@ class LoginActivity : BaseActivity() {
             //TODO 手机号验证
 
             MainApplication.loginMobile = mobile
-            when {
-                MainApplication.role == null -> uiThread {
-                    toast(R.string.login_idle)
-                }
-                MainApplication.role is Admin -> uiThread {
-                    toast(R.string.login_admin)
-                }
-                MainApplication.role is Teacher -> uiThread {
-                    val teacher = MainApplication.role as Teacher
-                    toast(getString(R.string.login_teacher, teacher.name))
-                }
-                MainApplication.role is Student -> {
-                    val student = MainApplication.role as Student
-                    toast(getString(R.string.login_student, student.name))
+            uiThread {
+                when {
+                    MainApplication.role == null -> {
+                        toast(R.string.login_idle)
+                    }
+                    MainApplication.role is Student -> {
+                        val student = MainApplication.role as Student
+                        toast(getString(R.string.login_student, student.name))
+                    }
+                    MainApplication.role is Teacher -> {
+                        val teacher = MainApplication.role as Teacher
+                        toast(getString(R.string.login_teacher, teacher.name))
+                    }
+                    MainApplication.role is Admin -> {
+                        toast(R.string.login_admin)
+                    }
                 }
             }
 

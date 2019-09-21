@@ -1,2 +1,14 @@
 include ':app'
 rootProject.name='SignIn'
+
+include ':UtilsLibrary'
+project(':UtilsLibrary').projectDir = new File(settingsDir, '../CaojunLibrary/UtilsLibrary')
+
+include ':AMapLibrary'
+project(':AMapLibrary').projectDir = new File(settingsDir, '../CaojunLibrary/AMapLibrary')
+
+include ':AreaPickerLibrary'
+project(':AreaPickerLibrary').projectDir = new File(settingsDir, '../CaojunLibrary/AreaPickerLibrary')
+
+include ':AdapterLibrary'
+project(':AdapterLibrary').projectDir = new File(settingsDir, '../CaojunLibrary/AdapterLibrary')

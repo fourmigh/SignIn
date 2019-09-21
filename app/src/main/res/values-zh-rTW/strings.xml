@@ -12,4 +12,23 @@
     <string name="navigate">導航</string>
     <string name="modify">修改</string>
     <string name="call">打電話</string>
+    <string name="personal_info">個人資訊</string>
+    <string name="sign_list">簽到清單</string>
+    <string name="add_teacher">添加教師</string>
+    <string name="add_student">添加學生</string>
+    <string name="detail">詳情</string>
+    <string name="name">姓名</string>
+    <string name="delete">删除</string>
+    <string name="save">保存</string>
+    <string name="teacher">教師</string>
+    <string name="student">學生</string>
+    <string name="teacher_student">教師和學生</string>
+    <string name="bmob_error">BMOB异常：%s</string>
+    <string name="master_name">帶教老師姓名</string>
+    <string name="master_mobile">帶教老師手機號</string>
+    <string name="sign_name">簽到工地名稱</string>
+    <string name="sign_area">簽到工地省市區</string>
+    <string name="sign_address">簽到工地地址</string>
+    <string name="company_name">公司名稱</string>
+    <string name="company_address">公司地址</string>
 </resources>

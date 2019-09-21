@@ -1,4 +1,33 @@
 <resources>
     <string name="app_name">SignIn</string>
-    <string name="action_settings">Settings</string>
+    <string name="mobile">Mobile</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="login_idle">Please contact the administrator or teacher.</string>
+    <string name="login_admin">Hello, Admin.</string>
+    <string name="login_teacher">Hello, Teacher %s.</string>
+    <string name="login_student">Hello, Student %s.</string>
+    <string name="modify_call">Modify or Call?</string>
+    <string name="navigate">Navigate</string>
+    <string name="modify">Modify</string>
+    <string name="call">Call</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="sign_list">Sign List</string>
+    <string name="add_teacher">Add Teacher</string>
+    <string name="add_student">Add Student</string>
+    <string name="detail">Detail</string>
+    <string name="name">Name</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="teacher">Teacher</string>
+    <string name="student">Student</string>
+    <string name="teacher_student">Teacher and Student</string>
+    <string name="bmob_error">BMOB Error: %s</string>
+    <string name="master_name">Master Name</string>
+    <string name="master_mobile">Master Name</string>
+    <string name="sign_name">Sign Name</string>
+    <string name="sign_area">Sign Area</string>
+    <string name="sign_address">Sign Address</string>
+    <string name="company_name">Company Name</string>
+    <string name="company_address">Company Address</string>
 </resources>
