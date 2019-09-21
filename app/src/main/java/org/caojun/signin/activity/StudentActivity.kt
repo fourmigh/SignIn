@@ -176,8 +176,13 @@ class StudentActivity : BaseActivity() {
             searchGEO(student!!, object : Listener {
                 override fun onGeocodeSearched(result: GeocodeResult) {
 
-                    val latlon = result.geocodeAddressList[0].latLonPoint
-                    student?.geoPoint = BmobGeoPoint(latlon.longitude, latlon.latitude)
+                    if (result.geocodeAddressList.isNotEmpty()) {
+                        val latlon = result.geocodeAddressList[0].latLonPoint
+                        student?.geoPoint = BmobGeoPoint(latlon.longitude, latlon.latitude)
+                    } else {
+                        toast(R.string.geo_not_found)
+                        return
+                    }
 
                     if (isUpdate) {
                         student?.update(object : UpdateListener() {

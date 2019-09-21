@@ -1,6 +1,7 @@
 package org.caojun.signin.utils
 
 import com.amap.api.maps.AMap
+import com.amap.api.maps.AMapUtils
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.CameraPosition
 import com.amap.api.maps.model.LatLng
@@ -40,5 +41,9 @@ object GDMapUtils {
         aMap?.moveCamera(cameraUpdate)
         val marker = hmSiteMarker[student.objectId]
         marker?.showInfoWindow()
+    }
+
+    fun distance(start: LatLng, end: LatLng): Float {
+        return AMapUtils.calculateLineDistance(start, end)
     }
 }

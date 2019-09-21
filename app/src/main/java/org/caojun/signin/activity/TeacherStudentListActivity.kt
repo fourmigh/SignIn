@@ -9,7 +9,7 @@ import org.caojun.adapter.bean.AdapterItem
 import org.caojun.signin.BaseActivity
 import org.caojun.signin.R
 import org.caojun.signin.adapter.NameItem
-import org.caojun.signin.adapter.RadioButtonItem
+import org.caojun.signin.adapter.TeacherItem
 import org.caojun.signin.bmob.BmobUtils
 import org.caojun.signin.bmob.Student
 import org.caojun.signin.bmob.Teacher
@@ -33,7 +33,6 @@ class TeacherStudentListActivity : BaseActivity() {
 
     private var teacherId = ""
     private var adapterTeacher: CommonAdapter<Teacher>? = null
-    private val students = ArrayList<Student>()
     private var adapterStudent: CommonAdapter<Student>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +98,7 @@ class TeacherStudentListActivity : BaseActivity() {
     }
 
     private fun refreshStudents() {
-        students.clear()
+        val students = ArrayList<Student>()
         for (s in BmobUtils.students) {
             if (s.teacherId == teacherId) {
                 students.add(s)
@@ -128,7 +127,7 @@ class TeacherStudentListActivity : BaseActivity() {
         if (adapterTeacher == null) {
             adapterTeacher = object : CommonAdapter<Teacher>(BmobUtils.teachers, 1) {
                 override fun createItem(type: Any?): AdapterItem<*> {
-                    return RadioButtonItem(object : TeacherListener {
+                    return TeacherItem(object : TeacherListener {
                         override fun onItemChecked(objectId: String) {
                             this@TeacherStudentListActivity.teacherId = objectId
                             refreshStudents()

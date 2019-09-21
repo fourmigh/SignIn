@@ -30,4 +30,13 @@
     <string name="sign_address">Sign Address</string>
     <string name="company_name">Company Name</string>
     <string name="company_address">Company Address</string>
+    <string name="sign">Sign</string>
+    <string name="sign_time">Time</string>
+    <string name="sign_distance">Distance</string>
+    <string name="sign_task">Task</string>
+    <string name="sign_performance">Performance</string>
+    <string name="sign_guidance">Guidance</string>
+    <string name="sign_picture">Picture</string>
+    <string name="distance_value">%fm</string>
+    <string name="geo_not_found">GEO Not Found.</string>
 </resources>

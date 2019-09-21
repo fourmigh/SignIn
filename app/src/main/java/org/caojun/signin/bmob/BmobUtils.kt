@@ -1,11 +1,14 @@
 package org.caojun.signin.bmob
 
 import cn.bmob.v3.BmobQuery
+import cn.bmob.v3.datatype.BmobGeoPoint
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.SaveListener
+import com.amap.api.maps.model.LatLng
 import com.socks.library.KLog
 import org.caojun.signin.MainApplication
+import org.caojun.signin.utils.GDMapUtils
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.doAsyncResult
 import org.jetbrains.anko.uiThread
@@ -15,6 +18,8 @@ object BmobUtils {
     private val admins = ArrayList<Admin>()
     val teachers = ArrayList<Teacher>()
     val students = ArrayList<Student>()
+    val studentSigns = ArrayList<StudentSign>()
+    val teacherSigns = ArrayList<TeacherSign>()
 
     interface Listener {
         fun done()
@@ -151,5 +156,52 @@ object BmobUtils {
                 return
             }
         })
+    }
+
+    fun queryStudentSigns(studentId: String, listener: Listener) {
+        val query = BmobQuery<StudentSign>()
+        query.addWhereEqualTo("isDeleted", false)
+        query.addWhereEqualTo("studentId", studentId)
+        query.findObjects(object : FindListener<StudentSign>() {
+            override fun done(list: MutableList<StudentSign>?, e: BmobException?) {
+
+                doAsync {
+                    studentSigns.clear()
+                    if (list?.isNotEmpty() == true) {
+                        studentSigns.addAll(list)
+                    }
+                    uiThread {
+                        listener.done()
+                    }
+                }
+            }
+        })
+    }
+
+    fun queryTeacherSigns(teacherId: String, studentId: String, listener: Listener) {
+        val query = BmobQuery<TeacherSign>()
+        query.addWhereEqualTo("isDeleted", false)
+        query.addWhereEqualTo("teacherId", teacherId)
+        query.addWhereEqualTo("studentId", studentId)
+        query.findObjects(object : FindListener<TeacherSign>() {
+            override fun done(list: MutableList<TeacherSign>?, e: BmobException?) {
+
+                doAsync {
+                    teacherSigns.clear()
+                    if (list?.isNotEmpty() == true) {
+                        teacherSigns.addAll(list)
+                    }
+                    uiThread {
+                        listener.done()
+                    }
+                }
+            }
+        })
+    }
+
+    fun distance(start: BmobGeoPoint, end: BmobGeoPoint): Float {
+        val startLatLng = LatLng(start.latitude, start.longitude)
+        val endLatLng = LatLng(end.latitude, end.longitude)
+        return GDMapUtils.distance(startLatLng, endLatLng)
     }
 }

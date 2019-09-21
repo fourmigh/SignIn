@@ -29,6 +29,7 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import android.support.v7.app.AlertDialog
+import cn.bmob.v3.datatype.BmobGeoPoint
 import org.caojun.signin.R
 import org.jetbrains.anko.startActivity
 
@@ -84,18 +85,25 @@ class MapActivity : BaseActivity(), LocationSource, AMapLocationListener, AMap.O
 
     private fun refreshData() {
         doAsync {
-            val list = BmobUtils.students
-            val aMap = mapView.map
-            aMap.clear()
-            GDMapUtils.clear()
-            hmMarkerSite.clear()
-            for (i in list.indices) {
-                addMarkerToMap(aMap, list[i])
-            }
-            uiThread {
-                listView.adapter = object : CommonAdapter<Student>(list, 1) {
-                    override fun createItem(type: Any?): AdapterItem<*> {
-                        return NameItem()
+            if (MainApplication.role is Teacher) {
+                val list = BmobUtils.students
+                for (i in list.size - 1 downTo 0) {
+                    if (list[i].teacherId != MainApplication.role?.objectId) {
+                        list.removeAt(i)
+                    }
+                }
+                val aMap = mapView.map
+                aMap.clear()
+                GDMapUtils.clear()
+                hmMarkerSite.clear()
+                for (i in list.indices) {
+                    addMarkerToMap(aMap, list[i])
+                }
+                uiThread {
+                    listView.adapter = object : CommonAdapter<Student>(list, 1) {
+                        override fun createItem(type: Any?): AdapterItem<*> {
+                            return NameItem()
+                        }
                     }
                 }
             }
@@ -157,6 +165,7 @@ class MapActivity : BaseActivity(), LocationSource, AMapLocationListener, AMap.O
     override fun onLocationChanged(amapLocation: AMapLocation) {
         mLocationChangedListener?.onLocationChanged(amapLocation)// 显示系统小蓝点
         MainApplication.province = amapLocation.province
+        MainApplication.geoPoint = BmobGeoPoint(amapLocation.longitude, amapLocation.latitude)
         this.amapLocation = amapLocation
     }
 
@@ -171,7 +180,7 @@ class MapActivity : BaseActivity(), LocationSource, AMapLocationListener, AMap.O
                 }
                 negativeButton(R.string.modify) {
                     //TODO
-//                    startActivityForResult<AddressActivity>(RequestCode_Address, AddressActivity.Key_Site to site, AddressActivity.Key_Province to province)
+
                 }
             }.show()
         } else {

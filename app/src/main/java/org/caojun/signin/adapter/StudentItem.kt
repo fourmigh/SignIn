@@ -4,10 +4,10 @@ import android.view.View
 import android.widget.RadioButton
 import org.caojun.adapter.bean.AdapterItem
 import org.caojun.signin.R
-import org.caojun.signin.activity.TeacherStudentListActivity
-import org.caojun.signin.bmob.Teacher
+import org.caojun.signin.activity.TeacherSignListActivity
+import org.caojun.signin.bmob.Student
 
-class RadioButtonItem(private val teacherListener: TeacherStudentListActivity.TeacherListener): AdapterItem<Teacher> {
+class StudentItem(private val listener: TeacherSignListActivity.StudentListener): AdapterItem<Student> {
 
     private lateinit var rbName: RadioButton
 
@@ -22,21 +22,21 @@ class RadioButtonItem(private val teacherListener: TeacherStudentListActivity.Te
     override fun setViews() {
     }
 
-    override fun handleData(t: Teacher, position: Int) {
+    override fun handleData(t: Student, position: Int) {
         rbName.text = t.name
 
-        if (teacherListener.getItemCheckedId() != t.objectId) {
+        if (listener.getItemCheckedId() != t.objectId) {
             rbName.isChecked = false
         }
 
         rbName.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                teacherListener.onItemChecked(t.objectId)
+                listener.onItemChecked(t)
             }
         }
 
         rbName.setOnLongClickListener {
-            teacherListener.onItemLongClick(t)
+            listener.onItemLongClick(t)
             true
         }
     }

@@ -31,4 +31,13 @@
     <string name="sign_address">簽到工地地址</string>
     <string name="company_name">公司名稱</string>
     <string name="company_address">公司地址</string>
+    <string name="sign">簽到</string>
+    <string name="sign_time">時間</string>
+    <string name="sign_distance">距離</string>
+    <string name="sign_task">內容</string>
+    <string name="sign_performance">表現</string>
+    <string name="sign_guidance">指導</string>
+    <string name="sign_picture">照片</string>
+    <string name="distance_value">%f米</string>
+    <string name="geo_not_found">未査詢到經緯度座標，請換個地址試試！ </string>
 </resources>

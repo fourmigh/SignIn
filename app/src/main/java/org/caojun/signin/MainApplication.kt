@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.TextUtils
 import cn.bmob.v3.Bmob
 import cn.bmob.v3.BmobObject
+import cn.bmob.v3.datatype.BmobGeoPoint
 import com.socks.library.KLog
 import org.caojun.signin.BuildConfig.DEBUG
 import org.caojun.signin.bmob.BmobUtils
@@ -45,6 +46,7 @@ class MainApplication : Application() {
         }
 
         var province = ""
+        var geoPoint: BmobGeoPoint? = null
     }
 
     override fun onCreate() {

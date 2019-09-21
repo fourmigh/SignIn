@@ -16,6 +16,7 @@ open class BaseActivity : AppCompatActivity() {
         const val RequestCode_Login = 1
         const val RequestCode_Teacher = 2
         const val RequestCode_Student = 3
+        const val RequestCode_Sign = 4
     }
 
     override fun onResume() {
