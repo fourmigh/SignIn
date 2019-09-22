@@ -39,4 +39,5 @@
     <string name="sign_picture">Picture</string>
     <string name="distance_value">%fm</string>
     <string name="geo_not_found">GEO Not Found.</string>
+    <string name="sign_task_value">Sign in safely</string>
 </resources>

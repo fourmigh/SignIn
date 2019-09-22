@@ -45,6 +45,11 @@ class TeacherSignListActivity : BaseActivity() {
         refreshStudents()
     }
 
+    override fun onResume() {
+        super.onResume()
+        refreshSignButton()
+    }
+
     private fun refreshStudents() {
         students.clear()
         val teacher = MainApplication.role as Teacher
@@ -137,11 +142,19 @@ class TeacherSignListActivity : BaseActivity() {
     }
 
     private fun doSign() {
-        if (student == null) {
+        if (student == null || MainApplication.geoPoint == null) {
             return
         }
+        StudentSignActivity.sign?.geoPoint = MainApplication.geoPoint!!
+        val distance = BmobUtils.distance(MainApplication.geoPoint!!, student!!.geoPoint)
+        StudentSignActivity.sign?.distance = distance
+
         val studentId = student?.objectId
         val studentName = student?.name
-        startActivityForResult<TeacherSignActivity>(RequestCode_Sign, TeacherSignActivity.KEY_STUDENT_ID to studentId, TeacherSignActivity.KEY_STUDENT_NAME to studentName)
+
+        startActivityForResult<TeacherSignActivity>(RequestCode_Sign,
+            TeacherSignActivity.KEY_STUDENT_ID to studentId,
+            TeacherSignActivity.KEY_STUDENT_NAME to studentName,
+            TeacherSignActivity.KEY_DISTANCE to distance)
     }
 }

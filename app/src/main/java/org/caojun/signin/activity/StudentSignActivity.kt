@@ -34,13 +34,15 @@ class StudentSignActivity : BaseActivity() {
             etDistance.setText(getString(R.string.distance_value, sign?.distance))
             etTask.setText(sign?.task)
             btnDelete.isEnabled = true
+            btnSave.isEnabled = false
         } else {
             tilTime.visibility = View.GONE
             val student = MainApplication.role as Student
             val distance = if (MainApplication.geoPoint == null) 0F else BmobUtils.distance(MainApplication.geoPoint!!, student.geoPoint)
             etDistance.setText(getString(R.string.distance_value, distance))
-
+            etTask.setText(R.string.sign_task_value)
             btnDelete.isEnabled = false
+            btnSave.isEnabled = true
         }
 
         etTask.addTextChangedListener(object : TextWatcher {
@@ -56,7 +58,6 @@ class StudentSignActivity : BaseActivity() {
         })
 
         btnDelete.isEnabled = MainApplication.role is Admin
-        btnSave.isEnabled = false
 
         btnDelete.setOnClickListener {
             doDelete()
@@ -112,9 +113,13 @@ class StudentSignActivity : BaseActivity() {
         }
     }
 
+    override fun finish() {
+        sign = null
+        super.finish()
+    }
+
     private fun doDone(e: BmobException?) {
         if (e == null) {
-            sign = null
             setResult(Activity.RESULT_OK)
             finish()
         } else {

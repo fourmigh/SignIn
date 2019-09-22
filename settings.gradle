@@ -12,3 +12,6 @@ project(':AreaPickerLibrary').projectDir = new File(settingsDir, '../CaojunLibra
 
 include ':AdapterLibrary'
 project(':AdapterLibrary').projectDir = new File(settingsDir, '../CaojunLibrary/AdapterLibrary')
+
+include ':MultiImageSelectorLibrary'
+project(':MultiImageSelectorLibrary').projectDir = new File(settingsDir, '../CaojunLibrary/MultiImageSelectorLibrary')

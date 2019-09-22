@@ -40,4 +40,5 @@
     <string name="sign_picture">照片</string>
     <string name="distance_value">%f米</string>
     <string name="geo_not_found">未査詢到經緯度座標，請換個地址試試！ </string>
+    <string name="sign_task_value">安全簽到</string>
 </resources>

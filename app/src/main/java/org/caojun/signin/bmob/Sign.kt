@@ -1,6 +1,7 @@
 package org.caojun.signin.bmob
 
 import cn.bmob.v3.BmobObject
+import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.datatype.BmobGeoPoint
 
 open class Sign : BmobObject() {
@@ -11,4 +12,6 @@ open class Sign : BmobObject() {
     var geoPoint = BmobGeoPoint()
     //签到距离
     var distance = 0F
+    //照片的Base64
+    var picture = ""
 }
